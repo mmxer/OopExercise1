@@ -4,6 +4,9 @@
 
 namespace OopExercise1
 {
+    /// <summary>
+    /// Interface of a hash function object for our hash table array.
+    /// </summary>
     public interface IHashFuction
     {
         /// <summary>

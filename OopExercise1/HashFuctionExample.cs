@@ -4,6 +4,9 @@
 
 namespace OopExercise1
 {
+    /// <summary>
+    /// Example of a hash function class for our hash table array.
+    /// </summary>
     public class HashFuctionExample : IHashFuction
     {
         /// <summary>

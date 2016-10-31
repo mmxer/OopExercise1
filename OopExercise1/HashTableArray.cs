@@ -7,7 +7,10 @@ namespace OopExercise1
     using System;
     using System.Collections.Generic;
 
-    public class HashTableArray
+    /// <summary>
+    /// Hash table array uses hash table to store and access items.
+    /// </summary>
+    public sealed class HashTableArray
     {
         private readonly int size;
         private readonly LinkedList<KeyValue>[] items;
@@ -16,9 +19,11 @@ namespace OopExercise1
         /// Initializes a new instance of the <see cref="HashTableArray"/> class.
         /// </summary>
         /// <param name="size">Array size.</param>
-        public HashTableArray(int size)
+        /// <param name="hashFunction">Hash function.</param>
+        public HashTableArray(int size, IHashFuction hashFunction)
         {
             this.size = size;
+            this.HashFunction = hashFunction;
             this.items = new LinkedList<KeyValue>[size];
         }
 
@@ -34,9 +39,9 @@ namespace OopExercise1
         /// <returns>Element's value.</returns>
         public string Find(string key)
         {
-            int position = this.GetArrayPosition(key);
-            LinkedList<KeyValue> linkedList = this.GetLinkedList(position);
-            foreach (KeyValue item in linkedList)
+            var position = this.GetArrayPosition(key);
+            var linkedList = this.GetLinkedList(position);
+            foreach (var item in linkedList)
             {
                 if (item.Key.Equals(key))
                 {
@@ -54,9 +59,9 @@ namespace OopExercise1
         /// <param name="value">Value</param>
         public void Add(string key, string value)
         {
-            int position = this.GetArrayPosition(key);
-            LinkedList<KeyValue> linkedList = this.GetLinkedList(position);
-            KeyValue item = new KeyValue() { Key = key, Value = value };
+            var position = this.GetArrayPosition(key);
+            var linkedList = this.GetLinkedList(position);
+            var item = new KeyValue() { Key = key, Value = value };
             linkedList.AddLast(item);
         }
 
@@ -66,11 +71,11 @@ namespace OopExercise1
         /// <param name="key">Element's key.</param>
         public void Remove(string key)
         {
-            int position = this.GetArrayPosition(key);
-            LinkedList<KeyValue> linkedList = this.GetLinkedList(position);
-            bool itemFound = false;
-            KeyValue foundItem = default(KeyValue);
-            foreach (KeyValue item in linkedList)
+            var position = this.GetArrayPosition(key);
+            var linkedList = this.GetLinkedList(position);
+            var itemFound = false;
+            var foundItem = default(KeyValue);
+            foreach (var item in linkedList)
             {
                 if (item.Key.Equals(key))
                 {
@@ -90,9 +95,9 @@ namespace OopExercise1
         /// </summary>
         /// <param name="key">Bucket's key.</param>
         /// <returns>Position.</returns>
-        protected int GetArrayPosition(string key)
+        private int GetArrayPosition(string key)
         {
-            int position = this.HashFunction.GetHashCode(key) % this.size;
+            var position = this.HashFunction.GetHashCode(key) % this.size;
             return Math.Abs(position);
         }
 
@@ -102,7 +107,7 @@ namespace OopExercise1
         /// </summary>
         /// <param name="position">Bucket's position.</param>
         /// <returns>Bucket of elements.</returns>
-        protected LinkedList<KeyValue> GetLinkedList(int position)
+        private LinkedList<KeyValue> GetLinkedList(int position)
         {
             LinkedList<KeyValue> linkedList = this.items[position];
             if (linkedList == null)
@@ -117,7 +122,7 @@ namespace OopExercise1
         /// <summary>
         /// Array's element.
         /// </summary>
-        protected struct KeyValue
+        private struct KeyValue
         {
             public string Key { get; set; }
 

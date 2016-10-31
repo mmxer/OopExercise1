@@ -10,8 +10,7 @@ namespace OopExercise1
     {
         public static void Main(string[] args)
         {
-            HashTableArray repository = new HashTableArray(20);
-            repository.HashFunction = new HashFuctionExample();
+            HashTableArray repository = new HashTableArray(20, new HashFuctionExample());
 
             repository.Add("1", "item 1");
             repository.Add("2", "item 2");
