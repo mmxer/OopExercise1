@@ -13,7 +13,8 @@ namespace OopExercise1
     public sealed class HashTableArray
     {
         private readonly int size;
-        private readonly LinkedList<KeyValue>[] items;
+        private LinkedList<KeyValue>[] items;
+        private IHashFuction hashFunction;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HashTableArray"/> class.
@@ -23,14 +24,55 @@ namespace OopExercise1
         public HashTableArray(int size, IHashFuction hashFunction)
         {
             this.size = size;
-            this.HashFunction = hashFunction;
+            this.hashFunction = hashFunction;
             this.items = new LinkedList<KeyValue>[size];
         }
 
         /// <summary>
         /// Gets or sets hash function.
         /// </summary>
-        public IHashFuction HashFunction { get; set; }
+        public IHashFuction HashFunction
+        {
+            get
+            {
+                return this.hashFunction;
+            }
+
+            set
+            {
+                // Update our hash table with new hash function:
+                // move all items to new positions.
+                var tempItems = new LinkedList<KeyValue>[this.size];
+                for (var i = 0; i < this.items.Length; i++)
+                {
+                    var linkedList = this.items[i];
+                    if (linkedList != null)
+                    {
+                        var tempLinkedList = new LinkedList<KeyValue>();
+                        foreach (var item in linkedList)
+                        {
+                            tempLinkedList.AddLast(item);
+                        }
+
+                        tempItems[i] = tempLinkedList;
+                    }
+                }
+
+                this.items = new LinkedList<KeyValue>[this.size];
+                this.hashFunction = value;
+                for (var i = 0; i < tempItems.Length; i++)
+                {
+                    var linkedList = tempItems[i];
+                    if (linkedList != null)
+                    {
+                        foreach (var item in linkedList)
+                        {
+                            this.Add(item.Key, item.Value);
+                        }
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Finds an element by it's key.

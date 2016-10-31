@@ -20,6 +20,9 @@ namespace OopExercise1
             Console.WriteLine(repository.Find("dsfdsdsd"));
             repository.Remove("1");
             Console.WriteLine(repository.Find("1"));
+            Console.WriteLine("Changing hash function.");
+            repository.HashFunction = new HashFuctionExample();
+            Console.WriteLine(repository.Find("2"));
             Console.WriteLine("Press any key.");
             Console.ReadLine();
         }
