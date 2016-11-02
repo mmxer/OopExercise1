@@ -25,6 +25,15 @@ namespace OopExercise1.Tests
         }
 
         [TestMethod()]
+        public void AddExistingKeyTest()
+        {
+            HashTableArray repository = new HashTableArray(2, new HashFuctionExample());
+            repository.Add("1", "item 1");
+            repository.Add("1", "item 1-2");
+            Assert.AreEqual("item 1-2", repository.Find("1"));
+        }
+
+        [TestMethod()]
         public void RemoveTest()
         {
             HashTableArray repository = new HashTableArray(1, new HashFuctionExample());

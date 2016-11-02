@@ -103,8 +103,19 @@ namespace OopExercise1
         {
             var position = this.GetArrayPosition(key);
             var linkedList = this.GetLinkedList(position);
-            var item = new KeyValue() { Key = key, Value = value };
-            linkedList.AddLast(item);
+
+            // Check if we already have this key.
+            foreach (var item in linkedList)
+            {
+                // We don't want to duplicate keys.
+                if (item.Key.Equals(key))
+                {
+                    linkedList.Remove(item);
+                    break;
+                }
+            }
+
+            linkedList.AddLast(new KeyValue() { Key = key, Value = value });
         }
 
         /// <summary>
